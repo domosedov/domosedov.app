@@ -1,13 +1,16 @@
 import type { NextPage } from 'next'
-import { reflect } from '@effector/reflect/ssr'
+import { list } from '@effector/reflect/ssr'
 import { CreateTask } from '~/features/task/create'
-import { TaskList as TaskListView, model as taskModel } from '~/entities/task'
+import { TaskItem, model as taskModel } from '~/entities/task'
 
-const TaskList = reflect({
-  view: TaskListView,
-  bind: {
-    items: taskModel.$items,
+const TaskList = list({
+  view: TaskItem,
+  source: taskModel.$items,
+  bind: {},
+  mapItem: {
+    data: item => item,
   },
+  getKey: item => item.id,
 })
 
 const Home: NextPage = () => {
